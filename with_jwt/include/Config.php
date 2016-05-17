@@ -7,7 +7,6 @@ define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'test');
  
-define('USER_CREATED_SUCCESSFULLY', 0);
-define('USER_CREATE_FAILED', 1);
-define('USER_ALREADY_EXISTED', 2);
+define('ISSUER', 'http://www.abcd.com');
+define('JWT_KEY', 'my_own_custom_super_secret_and_long_key');
 ?>
