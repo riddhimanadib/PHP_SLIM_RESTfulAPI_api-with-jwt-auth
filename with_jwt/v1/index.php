@@ -2,7 +2,7 @@
  
 require_once '../include/DbHandler.php';
 require '.././libs/Slim/Slim.php';
-require '.././libs/Firebase/php_jwt/src/JWT.php';
+require_once '.././libs/Firebase/php_jwt/JWT.php';
  
 \Slim\Slim::registerAutoloader();
  
@@ -71,23 +71,46 @@ $app->post('/auth/token', function() use ($app) {
             * keep it secure! You'll need the exact key to verify the 
             * token later.
             */
-            $secretKey = base64_decode(JWT_KEY);
-
+            $secret_key_encoded = JWT_KEY;
+            $secretKey = base64_decode($secret_key_encoded);
+            //$secretKey = JWT_KEY;
+            
             /*
             * Encode the array to a JWT string.
             * Second parameter is the key to encode the token.
             * 
             * The output string can be validated at http://jwt.io/
             */
-            $jwt = \Firebase\php_jwt\src\JWT::encode(
+            $jwt = \Firebase\JWT\JWT::encode(
                $data,      //Data to be encoded in the JWT
                $secretKey, // The signing key
-               'HS512'     // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
+               'HS256'     // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
                );
 
             $unencodedArray = ['jwt' => $jwt];
                 
             echoRespnse(200, $unencodedArray);
+        });
+        
+ /**
+ * Create token for client
+ * method POST
+ * url - /auth/token
+ */
+$app->post('/auth/token/decode', function() use ($app) {
+    
+            $jwt = $app->request->post('jwt');
+            
+            include_once '../include/Config.php';
+            $secret_key_encoded = JWT_KEY;
+            $secretKey = base64_decode($secret_key_encoded);
+            $decoded = \Firebase\JWT\JWT::decode(
+               $jwt,      //Data to be encoded in the JWT
+               $secretKey, // The signing key
+               array('HS256')    // Algorithm used to sign the token, see https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40#section-3
+               );
+                
+            echoRespnse(200, (array) $decoded);
         });
 
 /**
