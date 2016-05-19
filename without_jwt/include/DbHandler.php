@@ -3,8 +3,6 @@
 /**
  * Class to handle all db operations
  * This class will have CRUD methods for database tables
- *
- * @author Ravi Tamada
  */
 class DbHandler {
  
@@ -17,11 +15,10 @@ class DbHandler {
         $this->conn = $db->connect();
     }
  
-    /* ------------- `sample` table method ------------------ */
- 
     /**
      * Creating new Sample
      * @param String $sample_name : name of the new sample
+     * No Authentication needed
      */
     public function createSample($sample_name) {        
         $stmt = $this->conn->prepare("INSERT INTO sample(name) VALUES(?)");

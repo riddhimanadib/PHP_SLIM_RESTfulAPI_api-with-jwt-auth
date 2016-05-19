@@ -6,6 +6,10 @@ use \InvalidArgumentException;
 use \UnexpectedValueException;
 use \DateTime;
 
+require_once 'ExpiredException.php';
+require_once 'BeforeValidException.php';
+require_once 'SignatureInvalidException.php';
+
 /**
  * JSON Web Token implementation, based on this spec:
  * http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06

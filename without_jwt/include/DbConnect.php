@@ -2,8 +2,6 @@
  
 /**
  * Handling database connection
- *
- * @author Ravi Tamada
  */
 class DbConnect {
  
